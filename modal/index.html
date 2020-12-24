@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<style>
+			.modal{
+				position:absolute;
+				z-index:10000; /* 1 */
+				top:0;
+				left:0;
+				visibility:hidden;
+				width:100%;
+				height:100%;
+			}
+		
+			.modal.isvisible{
+				visibility:visible;
+			}
+			.modal-overlay{
+			 border: 1px solid;
+				position:fixed;
+				z-index:10;
+				top:0;
+				left:0;
+				width:100%;
+				height:100%;
+				background:hsla(0, 0%, 0%, 0.5);
+				visibility:hidden;
+				opacity:0;
+				transition:visibility 0s linear 0.3s, opacity 0.3s;
+			}
+			.modal.isvisible .modal-overlay{
+				opacity:1;
+				visibility:visible;
+				transition-delay:0s;
+			}
+			.modal-wrapper{
+				border:3px solid yellow;
+				position:absolute;
+				z-index:9999;
+				top:6em;
+				left:50%;
+				width:32em;
+				margin-left:-16em;
+				background-color:#fff;
+				box-shadow:0 0 1.5em hsla(0, 0%, 0%, 0.35);
+			}
+			.modal-footer{
+				 float:right;
+			}
+			.modal-header{
+				float:right;
+			}
+			.modal-content{
+				text-align:center;
+				font-size:1.5rem;
+			}
+			.modal-content-a{
+				
+				color:#9966FF;
+				font-size:1.5rem;
+			}
+			
+			.close-b{
+				background:#ff3300;
+			}
+			.show{
+				background:#9966FF;
+			}
+			.modal-bb{
+				left:91px;
+				top:32px;
+				position:absolute;
+			}	
+			@import url(https://fonts.googleapis.com/css?family=Squada+One);
+					body {
+					  background: #344557 url(https://unsplash.imgix.net/photo-1423683249427-8ca22bd873e0?fit=crop&fm=jpg&h=700&q=75&w=1050) 0 0 no-repeat;
+					  background-size: cover;
+					}
+					body:after {
+					  content: '';
+					  background: rgba(52, 69, 87, 0.85);
+					}
+
+					a {
+					  display: block;
+					  width: 220px;
+					  height: 70px;
+					  z-index: 1;
+					}
+					a:after {
+					  content: '';
+					  background: linear-gradient(120deg, #6559ae, #ff7159, #6559ae);
+					  background-size: 400% 400%;
+					  -webkit-clip-path: polygon(0% 100%, 4px 100%, 4px 4px, 216px 4px, 216px 66px, 4px 66px, 4px 100%, 100% 100%, 100% 0%, 0% 0%);
+					  -moz-animation: gradient 3s ease-in-out infinite, border 1s forwards ease-in-out reverse;
+					  -webkit-animation: gradient 3s ease-in-out infinite, border 1s forwards ease-in-out reverse;
+					  animation: gradient 3s ease-in-out infinite, border 1s forwards ease-in-out reverse;
+					}
+					a > span {
+					  display: block;
+					  background: linear-gradient(120deg, #6559ae, #ff7159, #6559ae);
+					  background-size: 400% 400%;
+					  -webkit-background-clip: text;
+					  -webkit-text-fill-color: transparent;
+					  -moz-animation: gradient 3s ease-in-out infinite;
+					  -webkit-animation: gradient 3s ease-in-out infinite;
+					  animation: gradient 3s ease-in-out infinite;
+					}
+
+					/* helpers */
+					.absolute-centering, body:after, a, a:after {
+					  position: absolute;
+					  top: 0;
+					  left: 0;
+					  right: 0;
+					  bottom: 0;
+					  margin: auto;
+					}
+
+					.text-formatting, a {
+					  text-transform: uppercase;
+					  text-decoration: none;
+					  text-align: center;
+					  letter-spacing: 2px;
+					  line-height: 70px;
+					  font-family: 'Squada One', cursive;
+					  font-size: 28px;
+					}
+
+					/* motion */
+					@-moz-keyframes gradient {
+					  0% {
+						background-position: 14% 0%;
+					  }
+					  50% {
+						background-position: 87% 100%;
+					  }
+					  100% {
+						background-position: 14% 0%;
+					  }
+					}
+					@-webkit-keyframes gradient {
+					  0% {
+						background-position: 14% 0%;
+					  }
+					  50% {
+						background-position: 87% 100%;
+					  }
+					  100% {
+						background-position: 14% 0%;
+					  }
+					}
+					@keyframes gradient {
+					  0% {
+						background-position: 14% 0%;
+					  }
+					  50% {
+						background-position: 87% 100%;
+					  }
+					  100% {
+						background-position: 14% 0%;
+					  }
+					}
+					@-moz-keyframes border {
+					  0% {
+						-webkit-clip-path: polygon(0% 100%, 4px 100%, 4px 4px, 216px 4px, 216px 66px, 4px 66px, 4px 100%, 100% 100%, 100% 0%, 0% 0%);
+					  }
+					  25% {
+						-webkit-clip-path: polygon(0% 100%, 4px 100%, 4px 4px, 216px 4px, 216px 66px, 216px 66px, 216px 100%, 100% 100%, 100% 0%, 0% 0%);
+					  }
+					  50% {
+						-webkit-clip-path: polygon(0% 100%, 4px 100%, 4px 4px, 216px 4px, 216px 4px, 216px 4px, 216px 4px, 216px 4px, 100% 0%, 0% 0%);
+					  }
+					  75% {
+						-webkit-clip-path: polygon(0% 100%, 4px 100%, 4px 4px, 4px 4px, 4px 4px, 4px 4px, 4px 4px, 4px 4px, 4px 0%, 0% 0%);
+					  }
+					  100% {
+						-webkit-clip-path: polygon(0% 100%, 4px 100%, 4px 100%, 4px 100%, 4px 100%, 4px 100%, 4px 100%, 4px 100%, 4px 100%, 0% 100%);
+					  }
+					}
+					@-webkit-keyframes border {
+					  0% {
+						-webkit-clip-path: polygon(0% 100%, 4px 100%, 4px 4px, 216px 4px, 216px 66px, 4px 66px, 4px 100%, 100% 100%, 100% 0%, 0% 0%);
+					  }
+					  25% {
+						-webkit-clip-path: polygon(0% 100%, 4px 100%, 4px 4px, 216px 4px, 216px 66px, 216px 66px, 216px 100%, 100% 100%, 100% 0%, 0% 0%);
+					  }
+					  50% {
+						-webkit-clip-path: polygon(0% 100%, 4px 100%, 4px 4px, 216px 4px, 216px 4px, 216px 4px, 216px 4px, 216px 4px, 100% 0%, 0% 0%);
+					  }
+					  75% {
+						-webkit-clip-path: polygon(0% 100%, 4px 100%, 4px 4px, 4px 4px, 4px 4px, 4px 4px, 4px 4px, 4px 4px, 4px 0%, 0% 0%);
+					  }
+					  100% {
+						-webkit-clip-path: polygon(0% 100%, 4px 100%, 4px 100%, 4px 100%, 4px 100%, 4px 100%, 4px 100%, 4px 100%, 4px 100%, 0% 100%);
+					  }
+					}
+					@keyframes border {
+					  0% {
+						-webkit-clip-path: polygon(0% 100%, 4px 100%, 4px 4px, 216px 4px, 216px 66px, 4px 66px, 4px 100%, 100% 100%, 100% 0%, 0% 0%);
+					  }
+					  25% {
+						-webkit-clip-path: polygon(0% 100%, 4px 100%, 4px 4px, 216px 4px, 216px 66px, 216px 66px, 216px 100%, 100% 100%, 100% 0%, 0% 0%);
+					  }
+					  50% {
+						-webkit-clip-path: polygon(0% 100%, 4px 100%, 4px 4px, 216px 4px, 216px 4px, 216px 4px, 216px 4px, 216px 4px, 100% 0%, 0% 0%);
+					  }
+					  75% {
+						-webkit-clip-path: polygon(0% 100%, 4px 100%, 4px 4px, 4px 4px, 4px 4px, 4px 4px, 4px 4px, 4px 4px, 4px 0%, 0% 0%);
+					  }
+					  100% {
+						-webkit-clip-path: polygon(0% 100%, 4px 100%, 4px 100%, 4px 100%, 4px 100%, 4px 100%, 4px 100%, 4px 100%, 4px 100%, 0% 100%);
+					  }
+					}
+
+
+		</style>
+	</head>
+	<body>
+		<div class="modal">
+			<div class="modal-overlay">
+				<div class="modal-wrapper">
+					<div class="modal-header">
+						<button type="button" class="close-a">&times;</button>
+					</div>
+					<div class="modal-body">
+						<div class="modal-content">
+							<img src="img/bao-tri.png"></img>
+							<div class="modal-bb">
+								<h3>Hiện đang cập nhật trang!</h3>
+								<p class="modal-content-a">Vui lòng bạn quay lại sau.</p>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="close-b">Đóng</button>
+
+					</div> 
+				</div> 
+			</div> 
+					
+		</div>
+			<a class="show" target="_blank"><span>Click me!</span></a>
+		<!-- <div class="button__wrap"> -->
+			<!-- <button class="button" style="--hue: 120.50611309136836">Show me attention</button> -->
+			<!-- <div class="button__shadow"></div> -->
+		<!-- </div> -->
+		
+
+		
+		<script src="jquery-3.5.1.min.js"></script>
+		<script>
+			$(".show").click(function(e){
+				e.preventDefault();
+				$(".modal").toggleClass("isvisible");
+			});
+			$(".close-a").click(function(e){
+				$(".modal").removeClass("isvisible")
+			});
+			$(".close-b").click(function(e){
+				$(".modal").removeClass("isvisible")
+			});
+		
+		
+		</script>
+		
+		
+	</body>
+
+
+
+
+
+<html>
